@@ -6,7 +6,7 @@ currently it saves used links and channel and guild ids in plain text. sqlite? m
 ## installation
 requirements - `nodejs` and `npm` 
 
-set these enviornment variables by making `.env` file in the root directory
+set these enviornment variables by making `.env` file in the project root
 
 - `GOOGLE_EMAIL` -  your google email address 
 - `GOOGLE_PASSWORD` - your google account password

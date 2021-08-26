@@ -89,10 +89,20 @@ async function sendToChannels(meetstr){
         }
     });
 }
+function log(msg){
+    let d = new Date();
+    let h = `${d.getHours()}`.padStart(2, '0')
+    let m = `${d.getMinutes()}`.padStart(2, '0')
+    let s = `${d.getSeconds()}`.padStart(2, '0')
+    console.log(`[${h}:${m}:${s}] ${msg}`); 
+
+}
 async function scrapAndSend(page){
 
     await page.goto(process.env.CLASSROOM_URL)
-    console.log("CLASSROOM_RELOAD");
+
+    log(`CLASSROOM_RELOAD`);
+
     await page.waitForFunction(
       'document.querySelector("body").innerText.includes("THIRD SEMESTER")'
     );
@@ -106,6 +116,7 @@ async function scrapAndSend(page){
         meetlink = meetlink.split("?")[0];
     }
     if(meetlink && !links.includes(meetlink)){
+        log(`MEET_LINK: ${meetlink}`);
         let meetstr = `@everyone \n A new meet link is out - \n ${meetlink} `
 
         sendToChannels(meetstr);
@@ -139,7 +150,7 @@ puppeteer.launch({ headless: true }).then(async browser => {
 
     await page.waitForSelector('#identifierNext')
     await page.click('#identifierNext')
-    console.log("EMAIL STEP DONE");
+    log("EMAIL STEP DONE");
     await page.waitFor(500);
 
     await page.waitForSelector('input[type="password"]')
@@ -151,7 +162,7 @@ puppeteer.launch({ headless: true }).then(async browser => {
     await page.waitForSelector('#passwordNext')
     await page.click('#passwordNext')
 
-    console.log("PASSWORD STEP DONE");
+    log("PASSWORD STEP DONE");
 
     await page.waitForNavigation({
             waitUntil: ["networkidle0", "domcontentloaded"]
